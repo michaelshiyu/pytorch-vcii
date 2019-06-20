@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import os
 import time
@@ -109,6 +110,7 @@ if args.load_model_name:
 while True:
 
     for batch, (crops, ctx_frames, _) in enumerate(train_loader):
+        # print(type(crops), len(crops), crops[0].size(), ctx_frames.size(), len(_))
         scheduler.step()
         train_iter += 1
 
@@ -128,13 +130,16 @@ while True:
         # Forward U-net.
         if args.v_compress:
             unet_output1, unet_output2 = forward_ctx(unet, ctx_frames)
+            # print(type(unet_output1), type(unet_output2), len(unet_output1), len(unet_output2),
+            #     unet_output1[0].size(), unet_output2[0].size())
         else:
             unet_output1 = Variable(torch.zeros(args.batch_size,)).cuda()
             unet_output2 = Variable(torch.zeros(args.batch_size,)).cuda()
 
         res, frame1, frame2, warped_unet_output1, warped_unet_output2 = prepare_inputs(
             crops, args, unet_output1, unet_output2)
-
+        
+        # print('res', res.size())
         losses = []
 
         bp_t0 = time.time()
@@ -153,17 +158,22 @@ while True:
                 encoder_input, encoder_h_1, encoder_h_2, encoder_h_3,
                 warped_unet_output1, warped_unet_output2)
 
+            # print('encoded', encoded.size())
             # Binarize.
             codes = binarizer(encoded)
 
+            # print('codes', codes.size())
             # Decode.
             (output, decoder_h_1, decoder_h_2, decoder_h_3, decoder_h_4) = decoder(
                 codes, decoder_h_1, decoder_h_2, decoder_h_3, decoder_h_4,
                 warped_unet_output1, warped_unet_output2)
 
+            # print('output', output.size())
             res = res - output
             out_img = out_img + output.data
             losses.append(res.abs().mean())
+
+            # print('out_img', out_img.size())
 
         bp_t1 = time.time()
 

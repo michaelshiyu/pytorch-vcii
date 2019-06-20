@@ -1,3 +1,4 @@
+import sys
 import os
 import os.path
 import glob
@@ -91,7 +92,7 @@ def get_bmv(img, fns):
     else:
         bmvs[2] = bmvs[2] * (-2.0)
         bmvs[3] = bmvs[3] * (-2.0)        
-
+    
     return bmvs
 
 
@@ -181,7 +182,7 @@ class ImageFolder(data.Dataset):
         self._load_image_list()
         if is_train:
             random.shuffle(self.imgs)
-
+        # print(sorted(self.imgs))
         print('\tdistance=%d/%d' % (args.distance1, args.distance2))
 
     def _load_image_list(self):
@@ -200,14 +201,15 @@ class ImageFolder(data.Dataset):
 
         for filename in glob.iglob(self.root + '/*png'):
             img_idx = int(filename[:-4].split('_')[-1])
-
             if self.args.v_compress:
                 if not (img_idx % 12 in positions):
                     continue
                 if all(os.path.isfile(fn) for fn in
                        get_group_filenames(
                             filename, img_idx, dist1, dist2)):
-
+                    # print(filename, get_group_filenames(
+                    #   filename, img_idx, dist1, dist2
+                    #   ))
                     self.imgs.append(filename)
             else:
                 if (img_idx % 12) != 1:
@@ -302,8 +304,9 @@ class ImageFolder(data.Dataset):
 
         ctx_frames /= 255.0
         ctx_frames = np_to_torch(ctx_frames)
-
+        # print(len(data), data[0].shape, ctx_frames.shape, main_fn)
         return data, ctx_frames, main_fn
 
     def __len__(self):
         return len(self.imgs)
+
