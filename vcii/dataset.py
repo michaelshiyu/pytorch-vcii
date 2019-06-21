@@ -270,23 +270,23 @@ class ImageFolder(data.Dataset):
             bmv[:, :, 2] = bmv[:, :, 2] / height
             bmv[:, :, 3] = bmv[:, :, 3] / width
 
-        img = np.concatenate([img, bmv], axis=2)
+            img = np.concatenate([img, bmv], axis=2)
 
-        assert img.shape[2] == 13
-        if self.is_train:
-            # If use_bmv, * -1.0 on bmv for flipped images.
-            img = flip_cv2(img, self.patch)
+            assert img.shape[2] == 13
+            if self.is_train:
+                # If use_bmv, * -1.0 on bmv for flipped images.
+                img = flip_cv2(img, self.patch)
 
-        if self.identity_grid is None:
-            self.identity_grid = get_identity_grid(img.shape[:2])
+            if self.identity_grid is None:
+                self.identity_grid = get_identity_grid(img.shape[:2])
 
-        img[..., 9 :11] += self.identity_grid
-        img[..., 11:13] += self.identity_grid
+            img[..., 9 :11] += self.identity_grid
+            img[..., 11:13] += self.identity_grid
 
         # Split img.
         ctx_frames = img[..., [0, 1, 2, 6, 7, 8]]
 
-        assert img.shape[2] == 13
+            # assert img.shape[2] == 13
         assert ctx_frames.shape[2] == 6
 
 

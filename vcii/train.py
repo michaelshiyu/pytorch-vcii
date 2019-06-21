@@ -9,11 +9,11 @@ import torch.optim as optim
 import torch.optim.lr_scheduler as LS
 from torch.autograd import Variable
 
-from dataset import get_loader
-from evaluate import run_eval
-from train_options import parser
-from util import get_models, init_lstm, set_train, set_eval
-from util import prepare_inputs, forward_ctx
+from vcii.dataset import get_loader
+from vcii.evaluate import run_eval
+from vcii.train_options import parser
+from vcii.utils import get_models, init_lstm, set_train, set_eval
+from vcii.utils import prepare_inputs, forward_ctx
 
 args = parser.parse_args()
 print(args)

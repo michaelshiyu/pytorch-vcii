@@ -52,4 +52,7 @@ python -u train.py \
   --distance1 ${distance1} --distance2 ${distance2} \
   --max-train-iters 100 \
   --save-out-img \
-  --num-crops 2
+  --num-crops 1 \
+  --patch 224 \
+  --batch-size 2 \
+  --gpus '5'

@@ -9,9 +9,9 @@ import torch
 from torch.autograd import Variable
 import torch.utils.data as data
 
-from util import eval_forward, evaluate, get_models, set_eval, save_numpy_array_as_image
+from vcii.utils import eval_forward, evaluate, get_models, set_eval, save_numpy_array_as_image
 from torchvision import transforms
-from dataset import get_loader
+from vcii.dataset import get_loader
 
 
 def save_codes(name, codes):
