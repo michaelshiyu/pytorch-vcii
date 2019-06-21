@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 # python 3 confusing imports :(
-from unet_parts import *
+from vcii.unet_parts import *
 
 class UNet(nn.Module):
     def __init__(self, n_channels, shrink):

@@ -183,7 +183,7 @@ class ImageFolder(data.Dataset):
         if is_train:
             random.shuffle(self.imgs)
         # print(sorted(self.imgs))
-        print('\tdistance=%d/%d' % (args.distance1, args.distance2))
+        # print('\tdistance=%d/%d' % (args.distance1, args.distance2))
 
     def _load_image_list(self):
         self.imgs = []
@@ -217,7 +217,7 @@ class ImageFolder(data.Dataset):
                 if os.path.isfile(filename):
                     self.imgs.append(filename)
 
-        print('%d images loaded.' % len(self.imgs))
+        # print('%d images loaded.' % len(self.imgs))
 
     def get_group_data(self, filename):
         img_idx = int(filename[:-4].split('_')[-1])

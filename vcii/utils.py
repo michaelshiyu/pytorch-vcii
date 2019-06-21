@@ -9,9 +9,9 @@ from torch.autograd import Variable
 import torch.nn.functional as F
 import torch.nn as nn
 
-import network
-from metric import msssim, psnr
-from unet import UNet
+import vcii.network as network
+from vcii.metric import msssim, psnr
+from vcii.unet import UNet
 
 
 def get_models(args, v_compress, bits, encoder_fuse_level, decoder_fuse_level):
